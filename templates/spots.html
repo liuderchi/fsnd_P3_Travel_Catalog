@@ -1,0 +1,92 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+  <div class="row divider green">
+    <div class="col-md-12"></div>
+  </div>
+  <div class="row banner menu">
+    <div class="col-md-11 col-md-offset-1 padding-none">
+      <h1>{{ region.name }}
+      <figure class="creator">
+        <img src="{{ region_creator.picture}}">
+        <figcaption>{{ region_creator.name }}</figcaption>
+      </figure>
+      </h1>
+    </div>
+  </div>
+
+  <div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li> <strong> {{ message }} </strong> </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="row padding-top padding-bottom">
+    <div class="col-md-1"></div>
+    <div class="col-md-11 padding-none">
+      <a href="{{url_for('new_spot', region_id=region.id )}}">
+        <button class="btn btn-default" id="new-menu-item">
+          <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
+          Add Spot to this Region
+        </button>
+      </a>
+      <a href="{{url_for('edit_region', region_id=region.id)}}">
+        <button class="btn btn-default" id="new-menu-item">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          Edit this Region
+        </button>
+      </a>
+      <a href="{{url_for('delete_region', region_id=region.id )}}">
+        <button class="btn btn-default delete" id="delete-restaurant">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          Delete this Region
+        </button>
+      </a>
+    </div>
+    <div class="col-md-7"></div>
+  </div>
+
+  {% if spots !=[] %}
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+        <h2>Travel for Sightseeing</h2>
+          {% for i in spots %}
+            {% if i.type == 'sightseeing' %}
+              <div class="menu-item">
+                <h3>{{i.name}}</h3>
+                <p>{{i.description}}</p>
+                <p class="menu-price">{{i.price}}</p>
+                <a href="{{url_for('edit_spot', region_id=region.id, spot_id=i.id) }}">Edit</a> |
+                <a href="{{url_for('delete_spot', region_id=region.id, spot_id=i.id) }}">Delete</a>
+              </div>
+            {% endif %}
+          {% endfor %}
+      </div>
+      <div class="col-md-4">
+        <h2>Travel for Foods</h2>
+          {% for i in spots %}
+            {% if i.type == 'food' %}
+            <div class="menu-item">
+              <h3>{{i.name}}</h3>
+              <p>{{i.description}}</p>
+              <p class="menu-price">{{i.price}}</p>
+              <a href="{{url_for('edit_spot', region_id=region.id, spot_id=i.id) }}">Edit</a> |
+              <a href="{{url_for('delete_spot', region_id=region.id, spot_id=i.id) }}">Delete</a>
+            </div>
+            {% endif %}
+          {% endfor %}
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  {% else %}
+    <p>You don't have any Spots. Add one right now!</p>
+  {% endif %}
+
+{% endblock %}

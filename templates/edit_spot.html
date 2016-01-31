@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+  <div class="row divider green">
+    <div class="col-md-12"></div>
+  </div>
+  <div class="row banner menu">
+    <div class="col-md-11 col-md-offset-1 padding-none">
+      <h1>Edit Spot {{spot.name}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-1 padding-top">
+      <form action="{{url_for('edit_spot', region_id=region_id, spot_id=spot.id)}}" method = "POST">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type ="text" maxlength="100" class="form-control" name="name" placeholder="{{spot.name}}">
+
+          <label for="description">Description:</label>
+          <textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="{{spot.description}}"></textarea>
+
+          <label for="price">Price:</label>
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <!--TODO add placeholder, remove value-->
+            <input type ="text" maxlength="10" class="form-control" name="price" placeholder="{{spot.price}}">
+          </div>
+          <label for="course">Type:</label>
+          <div class="radio">
+            <label>
+              <input type="radio" name="type" id="course1" value="sightseeing" {% if spot.type == 'sightseeing'%}checked{%endif%}>Sightseeing
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="type" id="course2" value="food" {% if spot.type == 'food' %}checked{%endif%}>Food
+            </label>
+          </div>
+          <button type="submit" class="btn btn-default" id="submit" type="submit">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
+        </div>
+      </form>
+      <a href = "{{url_for('show_spot', region_id=region_id)}}">
+        <button class="btn btn-default delete">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Cancel
+        </button>
+      </a>
+    </div>
+  </div>
+{% endblock %}

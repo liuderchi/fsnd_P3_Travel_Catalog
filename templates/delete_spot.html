@@ -1,0 +1,17 @@
+<!--Temp remove leading curly brace-->
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+  <h2> Are you sure you want to delete {{spot.name}}? </h2>
+  <form action="{{url_for('delete_spot', region_id=region_id, spot_id=spot.id)}}" method = 'POST'>
+    <button type="submit" class="btn btn-default delete" id="submit" type="submit">
+    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
+  </form>
+  <div class="padding-bottom"></div>
+  <a href = "{{url_for('show_spot', region_id=region_id)}}">
+    <button class="btn btn-default delete">
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+  </button>
+  </a>
+
+{% endblock %}
